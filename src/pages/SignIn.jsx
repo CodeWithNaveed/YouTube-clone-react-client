@@ -16,17 +16,16 @@ const SignIn = () => {
         e.preventDefault();
 
         try {
-            const res = await axios.post("https://youtubeclone-server.up.railway.app/api/auth/register", {
+            const res = await axios.post("https://youtubeclone-server.up.railway.app/api/auth/signup", {
                 name,
                 email,
                 password,
             }, { withCredentials: true });
-            dispatch(loginSuccess(res.data));
 
-            window.location.href = "/";
+            window.location.reload();
         } 
         catch (err) {
-            dispatch(loginFailure());
+            console.log(err);
         }
     };
 

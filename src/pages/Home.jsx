@@ -4,7 +4,6 @@ import Card from '../components/Card';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
 const Home = ({ darkMode, type }) => {
   const [videos, setVideos] = useState([]);
 
@@ -18,15 +17,13 @@ const Home = ({ darkMode, type }) => {
       }
     };
     fetchVideos();
-  }, [ type ]);
+  }, [type]);
 
   return (
-    <Container darkMode={darkMode}>
-
+    <Container $darkMode={darkMode}> {/* `$darkMode` use kiya styled-components ke liye */}
       {videos.map((video) => (
         <Card key={video._id} video={video} />
       ))}
-     
     </Container>
   );
 };
@@ -37,10 +34,12 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 20px; /* gap between items */
-  
-  & > * {
-    flex: 1 1 calc(33.33% - 20px); /* 3 items in a row, accounting for gap */
-  }
-`;
+  gap: 20px;
 
+  & > * {
+    flex: 1 1 calc(33.33% - 20px);
+  }
+
+  background-color: ${({ $darkMode }) => ($darkMode ? '#181818' : '#f9f9f9')};
+  color: ${({ $darkMode }) => ($darkMode ? '#fff' : '#000')};
+`;

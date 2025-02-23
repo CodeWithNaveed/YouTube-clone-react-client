@@ -38,13 +38,15 @@ const Menu = ({ darkMode, setDarkMode }) => {
         <StyledLink to="/">
           <Logo>
             <Img src={logo} alt="logo" />
-            YouTube_clone
+            videoTube
           </Logo>
         </StyledLink>
-        <Item>
-          <HomeIcon />
-          Home
-        </Item>
+        <StyledLink to="/">
+          <Item>
+            <HomeIcon />
+            Home
+          </Item>
+        </StyledLink>
         <StyledLink to="/trends">
           <Item>
             <ExploreOutlinedIcon />
