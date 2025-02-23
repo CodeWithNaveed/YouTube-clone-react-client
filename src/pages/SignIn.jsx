@@ -12,6 +12,21 @@ const SignIn = () => {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
 
+    const handleSignup = async (e) => {
+        e.preventDefault();
+
+        try {
+            const res = await axios.post("https://youtubeclone-server.up.railway.app/api/auth/register", {
+                name,
+                email,
+                password,
+            });
+            dispatch(loginSuccess(res.data));
+        } catch (err) {
+            dispatch(loginFailure());
+        }
+    };
+
     const handleLogin = async (e) => {
         e.preventDefault();
         dispatch(loginStart());
@@ -64,7 +79,7 @@ const SignIn = () => {
                 <Input placeholder="Username" onChange={(e) => setName(e.target.value)} />
                 <Input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                 <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                <Button>SIGN UP</Button>
+                <Button onClick={handleSignup}>SIGN UP</Button>
             </Wrapper>
 
             <More>
