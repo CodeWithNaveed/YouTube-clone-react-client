@@ -20,6 +20,7 @@ import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightne
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logout } from '../redux/userSlice';
+import logo from '../images/logo.png';
 
 const Menu = ({ darkMode, setDarkMode }) => {
 
@@ -36,7 +37,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
       <Wrapper>
         <StyledLink to="/">
           <Logo>
-            <Img src="/public/images/logo.png" alt="logo" />
+            <Img src={logo} alt="logo" />
             YouTube_clone
           </Logo>
         </StyledLink>
