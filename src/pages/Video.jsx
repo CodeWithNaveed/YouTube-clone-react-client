@@ -41,31 +41,22 @@ const Video = () => {
     fetchData();
   }, [path, dispatch]);
 
-  // const handleLike = async () => {
-  //   try {
-  //     await axios.put(`https://youtubeclone-server.up.railway.app/api/users/like/${currentVideo._id}`, {}, { withCredentials: true });
-  //     dispatch(like(currentUser.id));
-  //   } catch (err) {
-  //     console.error("Error liking video:", err);
-  //   }
-  // };
-
   const handleLike = async () => {
     try {
-      const token = localStorage.getItem("token"); // Token get karo
+      const token = localStorage.getItem("access_token"); 
 
       await axios.put(
         `https://youtubeclone-server.up.railway.app/api/users/like/${currentVideo._id}`,
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Token include karo
+            Authorization: `Bearer ${token}`, 
           },
-          withCredentials: true, // Cookies send karne ke liye
+          withCredentials: true, 
         }
       );
 
-      dispatch(like(currentUser.id)); // Redux state update karo
+      dispatch(like(currentUser.id)); 
     } catch (err) {
       console.error("Error liking video:", err);
     }
@@ -73,8 +64,20 @@ const Video = () => {
 
   const handleDislike = async () => {
     try {
-      await axios.put(`https://youtubeclone-server.up.railway.app/api/users/dislike/${currentVideo._id}`, {}, { withCredentials: true });
-      dispatch(dislike(currentUser.id));
+      const token = localStorage.getItem("access_token"); 
+
+      await axios.put(
+        `https://youtubeclone-server.up.railway.app/api/users/dislike/${currentVideo._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+          withCredentials: true, 
+        }
+      );
+
+      dispatch(dislike(currentUser.id)); 
     } catch (err) {
       console.error("Error disliking video:", err);
     }
@@ -82,11 +85,24 @@ const Video = () => {
 
   const handleSubscribe = async () => {
     try {
+      const token = localStorage.getItem("access_token"); // Token get karo
+
       const apiUrl = currentUser.subscribedUsers.includes(channel._id)
         ? `https://youtubeclone-server.up.railway.app/api/users/unsub/${channel._id}`
         : `https://youtubeclone-server.up.railway.app/api/users/sub/${channel._id}`;
-      await axios.put(apiUrl, {}, { withCredentials: true });
-      dispatch(Subscription(channel._id));
+
+      await axios.put(
+        apiUrl,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+          withCredentials: true, 
+        }
+      );
+
+      dispatch(Subscription(channel._id)); 
     } catch (err) {
       console.error("Error subscribing/unsubscribing:", err);
     }

@@ -22,29 +22,13 @@ const SignIn = () => {
                 password,
             }, { withCredentials: true });
             dispatch(loginSuccess(res.data));
-        } catch (err) {
+
+            window.location.href = "/";
+        } 
+        catch (err) {
             dispatch(loginFailure());
         }
     };
-
-    // const handleLogin = async (e) => {
-    //     e.preventDefault();
-    //     dispatch(loginStart());
-    //     try {
-    //         const res = await axios.post(
-    //             "https://youtubeclone-server.up.railway.app/api/auth/signin",
-    //             { name, email, password },
-    //             { withCredentials: true }
-    //         );
-    //         const token = res.data.token;
-    //         localStorage.setItem("access_token", token);
-    //         console.log(token);
-    //         dispatch(loginSuccess(res.data));
-    //     }
-    //     catch (err) {
-    //         dispatch(loginFailure());
-    //     }
-    // };
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -53,14 +37,14 @@ const SignIn = () => {
             const res = await axios.post(
                 "https://youtubeclone-server.up.railway.app/api/auth/signin",
                 { name, email, password },
-                { withCredentials: true } // ✅ Ensure yeh enabled ho
+                { withCredentials: true } 
             );
             
-            const token = res.data.token; // ✅ Ab response se token milega
-            localStorage.setItem("access_token", token); // ✅ Token store hoga
-            console.log("Token saved:", token);
-    
+            const token = res.data.token; 
+            localStorage.setItem("access_token", token); 
             dispatch(loginSuccess(res.data));
+
+            window.location.href = "/";
         }
         catch (err) {
             dispatch(loginFailure());
@@ -76,12 +60,14 @@ const SignIn = () => {
                 {
                     name: result.user.displayName,
                     email: result.user.email,
-                    img: result.user.photoURL, // Ensure this is correct
+                    img: result.user.photoURL, 
                 },
             );
             dispatch(loginSuccess(res.data));
-        } catch (error) {
-            console.error(error);
+
+            window.location.href = "/";
+        } 
+        catch (error) {
             dispatch(loginFailure());
         }
     };
