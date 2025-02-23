@@ -7,49 +7,57 @@ import { auth, provider } from '../firebase';
 import { signInWithPopup } from 'firebase/auth';
 
 const SignIn = () => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const dispatch = useDispatch();
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
+    // State variables
+    const [loginData, setLoginData] = useState({ name: "", password: "" });
+    const [signupData, setSignupData] = useState({ name: "", email: "", password: "" });
 
-        try {
-            const res = await axios.post("https://youtubeclone-server.up.railway.app/api/auth/signup", {
-                name,
-                email,
-                password,
-            }, { withCredentials: true });
-
-            window.location.reload();
-        } 
-        catch (err) {
-            console.log(err);
-        }
+    // Handle input changes
+    const handleLoginChange = (e) => {
+        setLoginData({ ...loginData, [e.target.name]: e.target.value });
     };
 
+    const handleSignupChange = (e) => {
+        setSignupData({ ...signupData, [e.target.name]: e.target.value });
+    };
+
+    // Login function
     const handleLogin = async (e) => {
         e.preventDefault();
         dispatch(loginStart());
         try {
             const res = await axios.post(
                 "https://youtubeclone-server.up.railway.app/api/auth/signin",
-                { name, email, password },
-                { withCredentials: true } 
+                loginData,
+                { withCredentials: true }
             );
-            
-            const token = res.data.token; 
-            localStorage.setItem("access_token", token); 
-            dispatch(loginSuccess(res.data));
 
+            localStorage.setItem("access_token", res.data.token);
+            dispatch(loginSuccess(res.data));
             window.location.href = "/";
-        }
-        catch (err) {
+        } catch (err) {
             dispatch(loginFailure());
+            console.error("Login Error:", err);
         }
     };
 
+    // Signup function
+    const handleSignup = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post(
+                "https://youtubeclone-server.up.railway.app/api/auth/signup",
+                signupData,
+                { withCredentials: true }
+            );
+            window.location.reload();
+        } catch (err) {
+            console.error("Signup Error:", err);
+        }
+    };
+
+    // Google Sign-in function
     const signInWithGoogle = async () => {
         try {
             dispatch(loginStart());
@@ -59,14 +67,14 @@ const SignIn = () => {
                 {
                     name: result.user.displayName,
                     email: result.user.email,
-                    img: result.user.photoURL, 
-                },
+                    img: result.user.photoURL,
+                }
             );
-            dispatch(loginSuccess(res.data));
 
+            localStorage.setItem("access_token", res.data.token);
+            dispatch(loginSuccess(res.data));
             window.location.href = "/";
-        } 
-        catch (error) {
+        } catch (error) {
             dispatch(loginFailure());
         }
     };
@@ -75,19 +83,19 @@ const SignIn = () => {
         <Container>
             <Wrapper>
                 <Title>SIGN IN</Title>
-                <SubTitle>To continue to YouTube-clone</SubTitle>
-                <Input type="text" placeholder="Username" onChange={(e) => setName(e.target.value)} />
-                <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                <SubTitle>To continue to videoTube</SubTitle>
+
+                <Input type="text" name="name" placeholder="Username" onChange={handleLoginChange} />
+                <Input type="password" name="password" placeholder="Password" onChange={handleLoginChange} />
                 <Button onClick={handleLogin}>SIGN IN</Button>
 
                 <Title>OR</Title>
-                <Button onClick={signInWithGoogle}>Signin with Google</Button>
-
+                <Button onClick={signInWithGoogle}>Sign in with Google</Button>
 
                 <Title>OR</Title>
-                <Input placeholder="Username" onChange={(e) => setName(e.target.value)} />
-                <Input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                <Input type="text" name="name" placeholder="Username" onChange={handleSignupChange} />
+                <Input type="email" name="email" placeholder="Email" onChange={handleSignupChange} />
+                <Input type="password" name="password" placeholder="Password" onChange={handleSignupChange} />
                 <Button onClick={handleSignup}>SIGN UP</Button>
             </Wrapper>
 
@@ -100,17 +108,18 @@ const SignIn = () => {
                 </Links>
             </More>
         </Container>
-    )
-}
+    );
+};
 
-export default SignIn
+export default SignIn;
 
+// Styled Components
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 56px); /* Fixed the typo here */
+    height: calc(100vh - 56px);
     color: ${({ theme }) => theme.text};
 `;
 

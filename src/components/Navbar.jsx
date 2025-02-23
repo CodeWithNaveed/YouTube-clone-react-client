@@ -7,6 +7,7 @@ import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
 import { useSelector } from 'react-redux';
 import Upload from './Upload';
 import { useNavigate } from "react-router-dom";
+import defaultavatar from "../assets/avatar.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -30,7 +31,9 @@ const Navbar = () => {
               placeholder="Search"
               onChange={(e) => setQ(e.target.value)}
             />
-            <SearchOutlinedIcon onClick={() => navigate(`/search?q=${q}`)} />
+            <SearchOutlinedIcon
+              onClick={() => q.trim() && navigate(`/search?q=${q.trim()}`)}
+            />
           </Search>
 
           {currentUser ? (
@@ -43,7 +46,7 @@ const Navbar = () => {
                 <Avatar
                   src={userIcon}
                   alt="Avatar"
-                  onError={(e) => (e.target.src = "https://via.placeholder.com/32")} // Fallback if image fails
+                  onError={(e) => (e.target.src = defaultavatar)} // Fallback if image fails
                 />
               ) : (
                 <PlaceholderAvatar /> // Placeholder while image is loading
