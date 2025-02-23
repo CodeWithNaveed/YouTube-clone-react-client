@@ -27,6 +27,25 @@ const SignIn = () => {
         }
     };
 
+    // const handleLogin = async (e) => {
+    //     e.preventDefault();
+    //     dispatch(loginStart());
+    //     try {
+    //         const res = await axios.post(
+    //             "https://youtubeclone-server.up.railway.app/api/auth/signin",
+    //             { name, email, password },
+    //             { withCredentials: true }
+    //         );
+    //         const token = res.data.token;
+    //         localStorage.setItem("access_token", token);
+    //         console.log(token);
+    //         dispatch(loginSuccess(res.data));
+    //     }
+    //     catch (err) {
+    //         dispatch(loginFailure());
+    //     }
+    // };
+
     const handleLogin = async (e) => {
         e.preventDefault();
         dispatch(loginStart());
@@ -34,8 +53,13 @@ const SignIn = () => {
             const res = await axios.post(
                 "https://youtubeclone-server.up.railway.app/api/auth/signin",
                 { name, email, password },
-                { withCredentials: true }
+                { withCredentials: true } // ✅ Ensure yeh enabled ho
             );
+            
+            const token = res.data.token; // ✅ Ab response se token milega
+            localStorage.setItem("access_token", token); // ✅ Token store hoga
+            console.log("Token saved:", token);
+    
             dispatch(loginSuccess(res.data));
         }
         catch (err) {

@@ -27,9 +27,14 @@ const Menu = ({ darkMode, setDarkMode }) => {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  // const handleSignOut = () => {
+  //   dispatch(logout());
+  //   localStorage.removeItem('user');
+  // };
+
   const handleSignOut = () => {
     dispatch(logout());
-    localStorage.removeItem('user'); // Adjust if using localStorage
+    localStorage.removeItem('user', null, "token");
   };
 
   return (
