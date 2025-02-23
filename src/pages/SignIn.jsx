@@ -17,7 +17,7 @@ const SignIn = () => {
         dispatch(loginStart());
         try {
             const res = await axios.post(
-                "http://localhost:4000/api/auth/signin",
+                "https://youtubeclone-server.up.railway.app/api/auth/signin",
                 { name, email, password },
                 { withCredentials: true }
             );
@@ -33,7 +33,7 @@ const SignIn = () => {
             dispatch(loginStart());
             const result = await signInWithPopup(auth, provider);
             const res = await axios.post(
-                "http://localhost:4000/api/auth/google",
+                "https://youtubeclone-server.up.railway.app/api/auth/google",
                 {
                     name: result.user.displayName,
                     email: result.user.email,

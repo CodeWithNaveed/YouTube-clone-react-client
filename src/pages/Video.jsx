@@ -28,8 +28,8 @@ const Video = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const videoRes = await axios.get(`http://localhost:4000/api/videos/find/${path}`);
-        const channelRes = await axios.get(`http://localhost:4000/api/users/find/${videoRes.data.userId}`);
+        const videoRes = await axios.get(`https://youtubeclone-server.up.railway.app/api/videos/find/${path}`);
+        const channelRes = await axios.get(`https://youtubeclone-server.up.railway.app/api/users/find/${videoRes.data.userId}`);
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
       } catch (err) {
@@ -43,7 +43,7 @@ const Video = () => {
 
   const handleLike = async () => {
     try {
-      await axios.put(`http://localhost:4000/api/users/like/${currentVideo._id}`, {}, { withCredentials: true });
+      await axios.put(`https://youtubeclone-server.up.railway.app/api/users/like/${currentVideo._id}`, {}, { withCredentials: true });
       dispatch(like(currentUser.id));
     } catch (err) {
       console.error("Error liking video:", err);
@@ -52,7 +52,7 @@ const Video = () => {
 
   const handleDislike = async () => {
     try {
-      await axios.put(`http://localhost:4000/api/users/dislike/${currentVideo._id}`, {}, { withCredentials: true });
+      await axios.put(`https://youtubeclone-server.up.railway.app/api/users/dislike/${currentVideo._id}`, {}, { withCredentials: true });
       dispatch(dislike(currentUser.id));
     } catch (err) {
       console.error("Error disliking video:", err);
@@ -62,8 +62,8 @@ const Video = () => {
   const handleSubscribe = async () => {
     try {
       const apiUrl = currentUser.subscribedUsers.includes(channel._id)
-        ? `http://localhost:4000/api/users/unsub/${channel._id}`
-        : `http://localhost:4000/api/users/sub/${channel._id}`;
+        ? `https://youtubeclone-server.up.railway.app/api/users/unsub/${channel._id}`
+        : `https://youtubeclone-server.up.railway.app/api/users/sub/${channel._id}`;
       await axios.put(apiUrl, {}, { withCredentials: true });
       dispatch(Subscription(channel._id));
     } catch (err) {

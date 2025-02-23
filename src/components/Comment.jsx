@@ -9,7 +9,7 @@ const Comment = ({ comment }) => {
   useEffect(() => {
     const fetchChannel = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/users/find/${comment.userId}`);
+        const res = await axios.get(`https://youtubeclone-server.up.railway.app/api/users/find/${comment.userId}`);
         setChannel(res.data);
       } catch (error) {
         console.error('Error fetching channel:', error);

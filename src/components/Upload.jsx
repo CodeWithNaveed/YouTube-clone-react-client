@@ -72,7 +72,7 @@ const Upload = ({ setOpen }) => {
     const handleUpload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:4000/api/videos", {
+            const res = await axios.post("https://youtubeclone-server.up.railway.app/api/videos", {
                 ...inputs,
                 tags,
             }, { withCredentials: true });

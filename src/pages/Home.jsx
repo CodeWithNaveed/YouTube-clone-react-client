@@ -11,7 +11,7 @@ const Home = ({ darkMode, type }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/videos/${type}`);
+        const res = await axios.get(`https://youtubeclone-server.up.railway.app/api/videos/${type}`);
         setVideos(res.data);
       } catch (error) {
         console.error("Error fetching videos:", error);

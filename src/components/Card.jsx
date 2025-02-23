@@ -12,7 +12,7 @@
 //     useEffect(() => {
 //         const fetchChannel = async () => {
 //             try {
-//                 const res = await axios.get(`http://localhost:4000/api/users/find/${video.userId}`);
+//                 const res = await axios.get(`https://youtubeclone-server.up.railway.app/api/users/find/${video.userId}`);
 //                 setChannel(res.data);
 //             } catch (error) {
 //                 console.error("Error fetching videos:", error);
@@ -112,7 +112,7 @@ const Card = ({ type, video }) => {
     useEffect(() => {
         const fetchChannel = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/api/users/find/${video.userId}`);
+                const res = await axios.get(`https://youtubeclone-server.up.railway.app/api/users/find/${video.userId}`);
                 setChannel(res.data);
             } catch (error) {
                 console.error("Error fetching channel data:", error);
