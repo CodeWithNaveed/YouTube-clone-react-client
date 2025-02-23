@@ -31,7 +31,7 @@ const Navbar = () => {
               placeholder="Search"
               onChange={(e) => setQ(e.target.value)}
             />
-            <SearchOutlinedIcon
+            <SearchOutlinedIcon style={{ cursor: "pointer", color: "gray" }}
               onClick={() => q.trim() && navigate(`/search?q=${q.trim()}`)}
             />
           </Search>

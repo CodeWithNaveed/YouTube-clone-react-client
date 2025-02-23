@@ -72,14 +72,25 @@ const Upload = ({ setOpen }) => {
     const handleUpload = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("https://youtubeclone-server.up.railway.app/api/videos", {
-                ...inputs,
-                tags,
-            }, { withCredentials: true });
-            setOpen(false);
-            res.status === 200 && navigate(`/video/${res.data._id}`);
+            const token = localStorage.getItem("access_token"); // Ensure token is stored
+    
+            const res = await axios.post(
+                "https://youtubeclone-server.up.railway.app/api/videos",
+                { ...inputs, tags },
+                {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Send token
+                    },
+                }
+            );
+    
+            if (res.status === 200) {
+                setOpen(false);
+                navigate(`/video/${res.data._id}`);
+            }
         } catch (err) {
-            console.log(err);
+            console.log(err.response ? err.response.data : err.message);
         }
     };
 
