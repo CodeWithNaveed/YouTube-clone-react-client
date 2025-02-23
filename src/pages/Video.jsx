@@ -41,10 +41,31 @@ const Video = () => {
     fetchData();
   }, [path, dispatch]);
 
+  // const handleLike = async () => {
+  //   try {
+  //     await axios.put(`https://youtubeclone-server.up.railway.app/api/users/like/${currentVideo._id}`, {}, { withCredentials: true });
+  //     dispatch(like(currentUser.id));
+  //   } catch (err) {
+  //     console.error("Error liking video:", err);
+  //   }
+  // };
+
   const handleLike = async () => {
     try {
-      await axios.put(`https://youtubeclone-server.up.railway.app/api/users/like/${currentVideo._id}`, {}, { withCredentials: true });
-      dispatch(like(currentUser.id));
+      const token = localStorage.getItem("token"); // Token get karo
+
+      await axios.put(
+        `https://youtubeclone-server.up.railway.app/api/users/like/${currentVideo._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Token include karo
+          },
+          withCredentials: true, // Cookies send karne ke liye
+        }
+      );
+
+      dispatch(like(currentUser.id)); // Redux state update karo
     } catch (err) {
       console.error("Error liking video:", err);
     }
