@@ -20,7 +20,7 @@ const SignIn = () => {
                 name,
                 email,
                 password,
-            });
+            }, { withCredentials: true });
             dispatch(loginSuccess(res.data));
         } catch (err) {
             dispatch(loginFailure());
